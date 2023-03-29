@@ -1,11 +1,40 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
-
-const inter = Inter({ subsets: ['latin'] })
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "next/font/google";
+import styles from "@/styles/Home.module.css";
+import React from "react";
+import {
+  Box,
+  Flex,
+  Text,
+  VStack,
+  FormControl,
+  FormLabel,
+  InputGroup,
+  InputLeftAddon,
+  Input,
+  Button,
+  useToast,
+} from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
+// import { TwitterLogo } from "./TwitterLogo";
 
 export default function Home() {
+  // TODO: Implement the API call and autocomplete logic here
+  const toast = useToast();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // TODO: Check if the Twitter handle is valid and make the API call
+    // If not found, show an error toast
+    toast({
+      title: "Error",
+      description: "Twitter handle not found.",
+      status: "error",
+      duration: 5000,
+      isClosable: true,
+    });
+  };
   return (
     <>
       <Head>
@@ -14,110 +43,42 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>src/pages/index.js</code>
-          </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
+
+      <VStack
+        minH="100vh"
+        justifyContent="space-between"
+        bgGradient="linear(to-r, teal.500, green.500)"
+        color="white"
+      >
+        <Box as="header" py={4}>
+          {/* TODO: Add your header content here */}
+        </Box>
+
+        <VStack as="main" spacing={4}>
+          <Text fontSize="4xl">Title</Text>
+          <Text fontSize="2xl">Subtitle</Text>
+          <Text>Some text goes here</Text>
+
+          <FormControl onSubmit={handleSubmit}>
+            <FormLabel htmlFor="twitterHandle">Twitter handle</FormLabel>
+            <InputGroup>
+              <InputLeftAddon>{/* <TwitterLogo /> */}</InputLeftAddon>
+              <Input
+                id="twitterHandle"
+                type="text"
+                // TODO: Add autocomplete logic here
               />
-            </a>
-          </div>
-        </div>
+            </InputGroup>
+            <Button type="submit" mt={4} colorScheme="blue">
+              Get instructions
+            </Button>
+          </FormControl>
+        </VStack>
 
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-          <div className={styles.thirteen}>
-            <Image
-              src="/thirteen.svg"
-              alt="13"
-              width={40}
-              height={31}
-              priority
-            />
-          </div>
-        </div>
-
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Docs <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Find in-depth information about Next.js features and&nbsp;API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Learn <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+        <Box as="footer" py={4}>
+          {/* TODO: Add your footer content here */}
+        </Box>
+      </VStack>
     </>
-  )
+  );
 }
