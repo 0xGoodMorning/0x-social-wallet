@@ -1,15 +1,11 @@
 import Head from "next/head";
 import Image from "next/image";
-import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
 import React from "react";
 import {
   Box,
-  Flex,
   Text,
   VStack,
   FormControl,
-  FormLabel,
   InputGroup,
   InputLeftAddon,
   Input,
@@ -17,7 +13,6 @@ import {
   useToast,
   Link,
 } from "@chakra-ui/react";
-import { ChakraProvider } from "@chakra-ui/react";
 import twitter from "../assets/twitter-logo.svg";
 import logo from "../assets/logo.svg";
 
