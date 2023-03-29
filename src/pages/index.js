@@ -15,6 +15,7 @@ import {
   Input,
   Button,
   useToast,
+  Link,
 } from "@chakra-ui/react";
 import { ChakraProvider } from "@chakra-ui/react";
 import twitter from "../assets/twitter-logo.svg";
@@ -98,8 +99,14 @@ export default function Home() {
           </FormControl>
         </VStack>
 
-        <Box as="footer" py={4}>
-          {/* TODO: Add your footer content here */}
+        <Box as="footer" py={4} textAlign="center" color="gray.800">
+          <Text>
+            Made with ❤️ in Bulgaria 🇧🇬 <br />
+            Copyright ©{" "}
+            <Link href="https://github.com/0xGoodMorning" isExternal>
+              0xGoodMorning
+            </Link>
+          </Text>
         </Box>
       </VStack>
     </>
