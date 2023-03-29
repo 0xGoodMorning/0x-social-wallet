@@ -22,7 +22,6 @@ import twitter from "../assets/twitter-logo.svg";
 import logo from "../assets/logo.svg";
 
 export default function Home() {
-  // TODO: Implement the API call and autocomplete logic here
   const toast = useToast();
 
   const handleSubmit = (e) => {
@@ -37,6 +36,7 @@ export default function Home() {
       isClosable: true,
     });
   };
+
   return (
     <>
       <Head>
@@ -66,37 +66,39 @@ export default function Home() {
             Twitter handle.
           </Text>
 
-          <FormControl onSubmit={handleSubmit}>
-            <InputGroup size="lg">
-              <InputLeftAddon size="lg" p={1} borderLeftRadius="20">
-                <Image
-                  src={twitter}
-                  width="40"
-                  height="40"
-                  alt="Twitter logo"
+          <form onSubmit={handleSubmit}>
+            <FormControl>
+              <InputGroup size="lg">
+                <InputLeftAddon size="lg" p={1} borderLeftRadius="20">
+                  <Image
+                    src={twitter}
+                    width="40"
+                    height="40"
+                    alt="Twitter logo"
+                  />
+                </InputLeftAddon>
+                <Input
+                  id="twitterHandle"
+                  type="text"
+                  size="lg"
+                  borderWidth="1px"
+                  borderColor="gray.200"
+                  bg="#F0F0F0"
+                  borderRadius="10"
+                  focusBorderColor="blue.500"
                 />
-              </InputLeftAddon>
-              <Input
-                id="twitterHandle"
-                type="text"
-                size="lg"
-                borderWidth="1px"
-                borderColor="gray.200"
-                bg="#F0F0F0"
-                borderRadius="10"
-                focusBorderColor="blue.500"
-              />
-            </InputGroup>
-            <Button
-              type="submit"
-              mt={4}
-              colorScheme="blue"
-              bg="#1DA1F2"
-              _hover={{ bg: "blue.300", color: "white" }}
-            >
-              Get instructions
-            </Button>
-          </FormControl>
+              </InputGroup>
+              <Button
+                type="submit"
+                mt={4}
+                colorScheme="blue"
+                bg="#1DA1F2"
+                _hover={{ bg: "blue.300", color: "white" }}
+              >
+                Get instructions
+              </Button>
+            </FormControl>
+          </form>
         </VStack>
 
         <Box as="footer" py={4} textAlign="center" color="gray.800">
