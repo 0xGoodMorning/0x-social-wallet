@@ -47,17 +47,22 @@ export default function Home() {
       <VStack
         minH="100vh"
         justifyContent="space-between"
-        bgGradient="linear(to-r, teal.500, green.500)"
-        color="white"
+        bgGradient="radial-gradient(circle at center, #E0E0E0, #C7C7C7)"
+        color="#111111"
       >
         <Box as="header" py={4}>
           {/* TODO: Add your header content here */}
         </Box>
 
-        <VStack as="main" spacing={4}>
-          <Text fontSize="4xl">Title</Text>
-          <Text fontSize="2xl">Subtitle</Text>
-          <Text>Some text goes here</Text>
+        <VStack as="main" spacing={6} maxWidth="400px" textAlign="center">
+          <Text fontSize="4xl">0xSocialWallet</Text>
+          <Text fontSize="2xl">True non-custodial social wallet!</Text>
+          <Text>
+            Secure, decentralized solution that seamlessly connects social media
+            accounts to the world of Web3, enhancing user experience and trust
+            by prioritizing non-custodial principles and robust security
+            measures.
+          </Text>
 
           <FormControl onSubmit={handleSubmit}>
             <FormLabel htmlFor="twitterHandle">Twitter handle</FormLabel>
@@ -66,6 +71,7 @@ export default function Home() {
               <Input
                 id="twitterHandle"
                 type="text"
+                size="lg"
                 // TODO: Add autocomplete logic here
               />
             </InputGroup>
