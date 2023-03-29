@@ -59,9 +59,8 @@ export default function Home() {
           <Text fontSize="2xl">True non-custodial social wallet!</Text>
           <Text>
             Secure, decentralized solution that seamlessly connects social media
-            accounts to the world of Web3, enhancing user experience and trust
-            by prioritizing non-custodial principles and robust security
-            measures.
+            accounts to the world of Web3. Send anyone crypto by inputting their
+            Twitter handle.
           </Text>
 
           <FormControl onSubmit={handleSubmit}>
@@ -86,7 +85,12 @@ export default function Home() {
                 // TODO: Add autocomplete logic here
               />
             </InputGroup>
-            <Button type="submit" mt={4} colorScheme="blue">
+            <Button
+              type="submit"
+              mt={4}
+              colorScheme="blue"
+              _hover={{ bg: "blue.400", color: "white" }}
+            >
               Get instructions
             </Button>
           </FormControl>
