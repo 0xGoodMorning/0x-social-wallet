@@ -18,6 +18,7 @@ import {
 } from "@chakra-ui/react";
 import { ChakraProvider } from "@chakra-ui/react";
 import twitter from "../assets/twitter-logo.svg";
+import logo from "../assets/logo.svg";
 
 export default function Home() {
   // TODO: Implement the API call and autocomplete logic here
@@ -55,6 +56,7 @@ export default function Home() {
         </Box>
 
         <VStack as="main" spacing={6} maxWidth="400px" textAlign="center">
+          <Image src={logo} width="100" height="100" alt="Logo" />
           <Text fontSize="4xl">0xSocialWallet</Text>
           <Text fontSize="2xl">True non-custodial social wallet!</Text>
           <Text>
@@ -82,14 +84,14 @@ export default function Home() {
                 bg="#F0F0F0"
                 borderRadius="10"
                 focusBorderColor="blue.500"
-                // TODO: Add autocomplete logic here
               />
             </InputGroup>
             <Button
               type="submit"
               mt={4}
               colorScheme="blue"
-              _hover={{ bg: "blue.400", color: "white" }}
+              bg="#1DA1F2"
+              _hover={{ bg: "blue.300", color: "white" }}
             >
               Get instructions
             </Button>
