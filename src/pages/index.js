@@ -17,7 +17,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { ChakraProvider } from "@chakra-ui/react";
-// import { TwitterLogo } from "./TwitterLogo";
+import twitter from "../assets/twitter-logo.svg";
 
 export default function Home() {
   // TODO: Implement the API call and autocomplete logic here
@@ -65,13 +65,24 @@ export default function Home() {
           </Text>
 
           <FormControl onSubmit={handleSubmit}>
-            <FormLabel htmlFor="twitterHandle">Twitter handle</FormLabel>
-            <InputGroup>
-              <InputLeftAddon>{/* <TwitterLogo /> */}</InputLeftAddon>
+            <InputGroup size="lg">
+              <InputLeftAddon size="lg" p={1} borderLeftRadius="20">
+                <Image
+                  src={twitter}
+                  width="40"
+                  height="40"
+                  alt="Twitter logo"
+                />
+              </InputLeftAddon>
               <Input
                 id="twitterHandle"
                 type="text"
                 size="lg"
+                borderWidth="1px"
+                borderColor="gray.200"
+                bg="#F0F0F0"
+                borderRadius="10"
+                focusBorderColor="blue.500"
                 // TODO: Add autocomplete logic here
               />
             </InputGroup>
