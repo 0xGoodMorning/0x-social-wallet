@@ -16,7 +16,7 @@ import {
 export default function Wallet() {
   return (
     <VStack spacing={4} align="center">
-      <HStack spacing={4} alignItems="center" mb="5">
+      <HStack spacing={4} alignItems="center" mb="2">
         <Image
           src="https://pbs.twimg.com/profile_images/804990434455887872/BG0Xh7Oa_400x400.jpg"
           boxSize="100px"
