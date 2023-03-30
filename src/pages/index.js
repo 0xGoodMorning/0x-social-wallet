@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 
 import useResolveWallet from '../hooks/useResolveWallet'
-import delayPromise from "../utils/delayPromise"
+import delayPromise from "../lib/delayPromise"
 
 import twitter from "../assets/twitter-logo.svg";
 import logo from "../assets/logo.svg";
@@ -113,9 +113,6 @@ export default function Home() {
               </Button>
             </FormControl>
           </form>
-          <Text>
-            {receiverAdr}
-          </Text>
         </VStack>
 
         <Box as="footer" py={4} textAlign="center" color="gray.800">
