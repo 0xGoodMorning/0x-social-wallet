@@ -1,5 +1,10 @@
-export default function handler(req, res) {
+import { getDb } from '../../lib/db'
+
+export default async function handler(req, res) {
     const { frontendKeyAddress, socialHandle, socialHandleType } = req.body
+    const count = await getDb().collection('handlers').count()
+
+    console.log({ count })
 
     // TODO:
     // check if there is an existing wallet for that handle and 

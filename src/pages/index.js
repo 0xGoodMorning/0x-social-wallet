@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Text,
@@ -24,7 +24,22 @@ export default function Home() {
   const toast = useToast();
   const { handleResolveWallet } = useResolveWallet()
 
+<<<<<<< HEAD
   const handleSubmit = async (e) => {
+=======
+  const [receiverAdr, setReceiverAddr] = useState('')
+
+  useEffect(() => {
+    async function getData() {
+      const res = await (await fetch('/api/create-receiver')).json()
+      setReceiverAddr(res.receiver_address)
+    }
+
+    getData()
+  }, [])
+
+  const handleSubmit = (e) => {
+>>>>>>> development
     e.preventDefault();
     // TODO: Check if the Twitter handle is valid and make the API call
     // If not found, show an error toast
@@ -113,6 +128,9 @@ export default function Home() {
               </Button>
             </FormControl>
           </form>
+          <Text>
+            {receiverAdr}
+          </Text>
         </VStack>
 
         <Box as="footer" py={4} textAlign="center" color="gray.800">
