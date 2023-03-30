@@ -91,6 +91,7 @@ export default function Wallet() {
       <Modal isOpen={isOpen} onClose={onClose} isCentered size='2xl'>
         <ModalOverlay />
           <ModalContent padding={16}>
+            <Text align="center" marginBottom="10" fontSize="2xl" fontWeight="semibold">{`Send to ${account.name}'s address`}</Text>
             <VStack align="center">
             <QRCode
               size={256}
@@ -98,7 +99,7 @@ export default function Wallet() {
               value={account.address || ''}
               viewBox={`0 0 256 256`}
               />
-              <HStack>
+              <HStack marginBottom={10}>
                 <Text fontSize="sm" noOfLines={1}>{account.address}</Text>
                 <CopyIcon onClick={() => {
                   navigator.clipboard.writeText(account.address)
