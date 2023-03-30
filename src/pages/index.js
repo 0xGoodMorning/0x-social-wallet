@@ -13,34 +13,42 @@ import {
   useToast,
   Link,
 } from "@chakra-ui/react";
+
+import useResolveWallet from '../hooks/useResolveWallet'
+import delayPromise from "../utils/delayPromise"
+
 import twitter from "../assets/twitter-logo.svg";
 import logo from "../assets/logo.svg";
 
 export default function Home() {
   const toast = useToast();
+  const { handleResolveWallet } = useResolveWallet()
 
-  const [receiverAdr, setReceiverAddr] = useState('')
-
-  useEffect(() => {
-    async function getData() {
-      const res = await (await fetch('/api/create-receiver')).json()
-      setReceiverAddr(res.receiver_address)
-    }
-
-    getData()
-  }, [])
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // TODO: Check if the Twitter handle is valid and make the API call
     // If not found, show an error toast
-    toast({
-      title: "Error",
-      description: "Twitter handle not found.",
-      status: "error",
-      duration: 5000,
-      isClosable: true,
+    // toast({
+    //   title: "Error",
+    //   description: "Twitter handle not found.",
+    //   status: "error",
+    //   duration: 5000,
+    //   isClosable: true,
+    // });
+
+    const res = await handleResolveWallet({ socialHandle: e.target.value, socialHandleType: 'twitter' })
+
+    !!res && toast({
+      title: "Success",
+      description: `Resolved to wallet: ${res.address}`,
+      status: "success",
+      duration: 2500,
+      isClosable: false,
     });
+
+    delayPromise(2500)
+
+    // TODO: nav to the next screen
   };
 
   return (
@@ -101,7 +109,7 @@ export default function Home() {
                 bg="#1DA1F2"
                 _hover={{ bg: "blue.300", color: "white" }}
               >
-                Get instructions
+                Look up wallet
               </Button>
             </FormControl>
           </form>

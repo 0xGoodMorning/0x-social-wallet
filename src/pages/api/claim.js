@@ -1,5 +1,5 @@
 export default function handler(req, res) {
-    const { frontend_key_address, social_handle, social_token } = req.body
+    const { frontendKeyAddress, socialHandle, socialHandleType, socialToken } = req.body
 
     // TODO:
 
