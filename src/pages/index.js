@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Text,
@@ -18,6 +18,17 @@ import logo from "../assets/logo.svg";
 
 export default function Home() {
   const toast = useToast();
+
+  const [receiverAdr, setReceiverAddr] = useState('')
+
+  useEffect(() => {
+    async function getData() {
+      const res = await (await fetch('/api/create-receiver')).json()
+      setReceiverAddr(res.receiver_address)
+    }
+
+    getData()
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -94,6 +105,9 @@ export default function Home() {
               </Button>
             </FormControl>
           </form>
+          <Text>
+            {receiverAdr}
+          </Text>
         </VStack>
 
         <Box as="footer" py={4} textAlign="center" color="gray.800">

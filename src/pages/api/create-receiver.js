@@ -1,5 +1,10 @@
-export default function handler(req, res) {
+import { getDb } from '../../lib/db'
+
+export default async function handler(req, res) {
     const { frontend_key_address, social_handle } = req.body
+    const count = await getDb().collection('handlers').count()
+
+    console.log({ count })
 
     // TODO:
 
