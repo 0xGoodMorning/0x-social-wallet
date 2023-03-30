@@ -3,12 +3,14 @@ import { useState } from 'react'
 import { Wallet } from 'ethers'
 import {  id } from 'ethers/lib/utils'
 
-import { fetchPost } from '../helpers/fetch'
+import { fetchPost } from '@/helpers/fetch'
+import useAccount from '@/hooks/useAccount'
 
 export default function useCreateWallet() {
   const [err, setErr] = useState('')
-  const [addAccErr, setAddAccErr] = useState('')
   const [inProgress, setInProgress] = useState(false)
+
+  const { updateAccount, resetAccount } = useAccount()
 
   const wrapProgress = async (fn, type = true) => {
     setInProgress(type)
@@ -32,6 +34,7 @@ export default function useCreateWallet() {
 
   const resolveWallet = async ({ socialHandle, socialHandleType = 'twitter' }) => {
     setErr('')
+    resetAccount()
     // async hack to let React run a tick so it can re-render before the blocking Wallet.createRandom()
     // eslint-disable-next-line no-promise-executor-return
     await new Promise((resolve) => setTimeout(resolve, 0))
@@ -52,16 +55,21 @@ export default function useCreateWallet() {
       `resolve-wallet returned no address, error: ${resolveWalletRes.message || resolveWalletRes}`
     )
     
+    updateAccount({
+      name: 'Simeon',
+      handle: '@sonytooo',
+      balance: 0,
+      token: null
+    })
+
     console.log('resolveWalletRes: ', resolveWalletRes)
 
     return resolveWalletRes
-
-    // TODO: create user record in the local storage
   }
 
   const handleResolveWallet = async ({ socialHandle, socialHandleType }) => {
     return await wrapProgress(() => resolveWallet({ socialHandle, socialHandleType }), true)
   }
 
-  return { handleResolveWallet, wrapErr, wrapProgress, err, addAccErr, inProgress }
+  return { handleResolveWallet, wrapErr, wrapProgress, err, inProgress }
 }
