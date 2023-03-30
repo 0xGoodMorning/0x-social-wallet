@@ -1,4 +1,5 @@
 import { getDb } from '../../lib/db'
+import { getProxyDeployBytecode } from '../../lib/IdentityProxyDeploy'
 import { id, getAddress } from 'ethers/lib/utils'
 import * as ethers from 'ethers'
 
