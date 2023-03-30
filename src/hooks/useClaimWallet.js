@@ -1,69 +1,83 @@
-import { useState } from 'react'
+import { useState } from "react";
 
-import { Wallet } from 'ethers'
+import { Wallet } from "ethers";
 
-import { fetchPost } from '@/helpers/fetch'
-import useAccount from '@/hooks/useAccount'
+import { fetchPost } from "@/helpers/fetch";
+import useAccount from "@/hooks/useAccount";
 
 export default function useCreateWallet() {
-  const [err, setErr] = useState('')
-  const [inProgress, setInProgress] = useState(false)
+  const [err, setErr] = useState("");
+  const [inProgress, setInProgress] = useState(false);
 
-  const { updateAccount } = useAccount()
+  const { updateAccount } = useAccount();
 
   const wrapProgress = async (fn, type = true) => {
-    setInProgress(type)
+    setInProgress(type);
     try {
-      return await fn()
+      return await fn();
     } catch (e) {
-      setAddAccErr(`Unexpected error: ${e.message || e}`)
+      setErr(`Unexpected error: ${e.message || e}`);
     }
-    setInProgress(false)
-  }
+    setInProgress(false);
+  };
 
   const wrapErr = async (fn) => {
-    setAddAccErr('')
+    setErr("");
     try {
-      await fn()
+      await fn();
     } catch (e) {
-      setInProgress(false)
-      setAddAccErr(`Unexpected error: ${e.message || e}`)
+      setInProgress(false);
+      setErr(`Unexpected error: ${e.message || e}`);
     }
-  }
+  };
 
-  const claimWallet = async ({ socialHandle, socialHandleType = 'twitter' }) => {
-    setErr('')
+  const claimWallet = async ({
+    socialHandle,
+    socialHandleType = "twitter",
+  }) => {
+    setErr("");
 
     // TODO: impl here the fetch of the JWT from the Twitter API
-    const socialToken = 'JWT returned from the twitter api that should be called and awaited here'
+    const socialToken =
+      "JWT returned from the twitter api that should be called and awaited here";
 
     if (!socialToken) {
-      setErr('Twitter authentication failed!')
-      throw new Error(`Twitter authentication failed`)
+      setErr("Twitter authentication failed!");
+      throw new Error(`Twitter authentication failed`);
     }
 
-    const frontendKeyWallet = Wallet.createRandom({ extraEntropy })
+    const frontendKeyWallet = Wallet.createRandom({ extraEntropy });
 
-    const frontendKeyAddress = frontendKeyWallet.address
+    const frontendKeyAddress = frontendKeyWallet.address;
 
-    const claimWalletRes = await fetchPost(`api/claim`, { frontendKeyAddress, socialHandle, socialHandleType, socialToken })
+    const claimWalletRes = await fetchPost(`api/claim`, {
+      frontendKeyAddress,
+      socialHandle,
+      socialHandleType,
+      socialToken,
+    });
 
     if (!claimWalletRes.success)
-    throw new Error(
-      `Internal error when claiming your wallet: ${claimWalletRes.message || claimWalletRes}`
-    )
+      throw new Error(
+        `Internal error when claiming your wallet: ${
+          claimWalletRes.message || claimWalletRes
+        }`
+      );
 
-    console.log('claimWalletRes', claimWalletRes)
+    console.log("claimWalletRes", claimWalletRes);
 
     // TODO: Update the account with a valid access token
     updateAccount({
-      token: 'accessToken'
-    })
-  }
+      token: "accessToken",
+    });
+  };
 
   const handleClaimWallet = async ({ socialHandle, socialHandleType }) => {
-    return await wrapProgress(() => claimWallet({ socialHandle, socialHandleType }), true)
-  }
+    return await wrapProgress(
+      () => claimWallet({ socialHandle, socialHandleType }),
+      true
+    );
+  };
 
-  return { handleClaimWallet, wrapErr, wrapProgress, err, inProgress }
+  return { handleClaimWallet, wrapErr, wrapProgress, err, inProgress };
 }

@@ -17,18 +17,18 @@ export default function useCreateWallet() {
     try {
       return await fn();
     } catch (e) {
-      setAddAccErr(`Unexpected error: ${e.message || e}`);
+      setErr(`Unexpected error: ${e.message || e}`);
     }
     setInProgress(false);
   };
 
   const wrapErr = async (fn) => {
-    setAddAccErr("");
+    setErr("");
     try {
       await fn();
     } catch (e) {
       setInProgress(false);
-      setAddAccErr(`Unexpected error: ${e.message || e}`);
+      setErr(`Unexpected error: ${e.message || e}`);
     }
   };
 
