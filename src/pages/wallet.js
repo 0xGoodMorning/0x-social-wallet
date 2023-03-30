@@ -1,4 +1,5 @@
 import Blockies from "react-blockies-image";
+import useAccount from "@/hooks/useAccount";
 import {
   HStack,
   Button,
@@ -14,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 
 export default function Wallet() {
+  const { account } = useAccount();
   return (
     <VStack spacing={4} align="center">
       <HStack spacing={4} alignItems="center" mb="2">
@@ -25,10 +27,10 @@ export default function Wallet() {
         />
         <VStack align="flex-start">
           <Text fontSize="2xl" fontWeight="bold">
-            Sam Altman
+            {account.name}
           </Text>
           <Text fontSize="l">
-            Twitter handle: <Link>@sama</Link>
+            Twitter handle: <Link>@{account.handle}</Link>
           </Text>
         </VStack>
       </HStack>
@@ -43,23 +45,16 @@ export default function Wallet() {
         alignItems="flex-start"
       >
         <HStack spacing={4} alignItems="center">
-          <Blockies
-            width={50}
-            height={50}
-            seed={"0xdd2a7Dc3d038b5EA4164D41B3617aDa5eb4179bf"}
-            scale={8}
-          />
+          <Blockies width={50} height={50} seed={account.address} scale={8} />
           <VStack align="flex-start">
             <Text fontSize="xl" fontWeight="bold">
               Crypto Address
             </Text>
-            <Text fontSize="md">
-              0xfA2DfB09851EeC1841FEB9f7c5D2E952151bfF0a
-            </Text>
+            <Text fontSize="md">{account.address}</Text>
           </VStack>
         </HStack>
         <Text fontSize="xl" fontWeight="bold">
-          Funds: $0
+          Funds: ${account.balance}
         </Text>
       </VStack>
       <HStack>
