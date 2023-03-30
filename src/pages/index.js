@@ -4,6 +4,7 @@ import {
   Button,
   Link
 } from "@chakra-ui/react";
+
 import NextLink from 'next/link'
 
 export default function Home() {
