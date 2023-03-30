@@ -9,6 +9,7 @@ function connect() {
     try {
         const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 })
         db = client.db(dbName)
+        createIndexes(db)
 
         console.log(`Great success - mongo connected to ${dbName}`)
     } catch (err) {
@@ -22,7 +23,7 @@ function getDb() {
 }
 
 function createIndexes(db) {
-    // TODO: 
+    db.collection('wallets').createIndex({ 'socialHandleType': 1, 'socialHandle': 1 }, { unique: true })
 }
 
 connect()
