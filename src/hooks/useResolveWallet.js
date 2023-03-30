@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Wallet } from 'ethers'
 import {  id } from 'ethers/lib/utils'
 
-import { fetchPost } from '../helpers/fetch'
+import { fetchPost } from '@/helpers/fetch'
 
 export default function useCreateWallet() {
   const [err, setErr] = useState('')
