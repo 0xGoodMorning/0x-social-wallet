@@ -1,4 +1,6 @@
-export default function handler(req, res) {
+import { getToken } from "next-auth/jwt"
+
+export default async (req, res) => {
     const { frontend_key_address, social_handle, social_token } = req.body
 
     // TODO:
@@ -10,6 +12,7 @@ export default function handler(req, res) {
     // deploy contract to receiver wallet address
 
     res.status(200).json({
-        success: true
+        success: true,
+        session: await getToken({ req }),
     })
 }
