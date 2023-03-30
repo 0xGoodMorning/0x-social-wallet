@@ -66,7 +66,7 @@ export default function useCreateWallet() {
 
     updateAccount({
       name: "Simeon",
-      handle: "@sonytooo",
+      handle: "sonytooo",
       address: "0xfA2DfB09851EeC1841FEB9f7c5D2E952151bfF0a",
       balance: 0,
       token: null,
