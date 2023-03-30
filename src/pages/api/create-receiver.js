@@ -1,4 +1,4 @@
-import { getDb } from '../../utils/db'
+import { getDb } from '../../lib/db'
 
 export default async function handler(req, res) {
     const { frontend_key_address, social_handle } = req.body
