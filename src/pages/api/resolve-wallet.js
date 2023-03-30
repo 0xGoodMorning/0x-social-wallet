@@ -1,7 +1,9 @@
 import { getDb } from '../../lib/db'
+import * as config from '../../lib/config'
 import { getProxyDeployBytecode } from '../../lib/IdentityProxyDeploy'
-import { id, getAddress } from 'ethers/lib/utils'
+import { AbiCoder, keccak256, id, getAddress } from 'ethers/lib/utils'
 import * as ethers from 'ethers'
+import { generateAddress2 } from 'ethereumjs-util'
 
 const walletsCol = getDb().collection('wallets')
 
@@ -18,16 +20,27 @@ export default async function handler(req, res) {
     if (wallets.length > 0) {
         walletAddr = wallets[0]._id
     } else {
-        const salt = '0x0000000000000000000000000000000000000000000000000000000000000001'
-
-        // TODO: calc bytecode and wallet address
-        const bytecode = '0x0'
-        walletAddr = '0x0000000000000000000000000000000000000789'
+        // // TODO: calc bytecode and wallet address
+        // walletAddr = '0x0000000000000000000000000000000000000789'
     
         const extraEntropy = id(`${socialHandleType}:${socialHandle}:${Date.now()}:${Math.random()}`)
         const backendKeyPassword = ethers.Wallet.createRandom({ extraEntropy }).mnemonic.phrase.split(' ').slice(0, 6).join(' ') + ' ' + `${socialHandleType}:${socialHandle}`
         const backendWallet = await ethers.utils.HDNode.fromMnemonic(process.env.BACKEND_KEY_MNEMONIC, backendKeyPassword)
-    
+
+        const { salt, baseIdentityAddr, identityFactoryAddr, quickAccManager, quickAccTimelock } = config
+        const quickAccountTuple = [quickAccTimelock, frontendKeyAddress, backendWallet.address]
+
+        const abiCoder = new AbiCoder()
+        const accHash = keccak256(abiCoder.encode(['tuple(uint, address, address)'], [quickAccountTuple]))
+        const privileges = [[quickAccManager, accHash]]
+        const bytecode = getProxyDeployBytecode(baseIdentityAddr, privileges, { privSlot: 0 })
+        const walletAddr = getAddress('0x' + generateAddress2(
+            // Converting to buffer is required in ethereumjs-util version: 7.1.3
+            Buffer.from(identityFactoryAddr.slice(2), 'hex'),
+            Buffer.from(salt.slice(2), 'hex'),
+            Buffer.from(bytecode.slice(2), 'hex')
+        ).toString('hex'))
+
         // create receiver wallet account in DB
         await walletsCol.insertOne({
             _id: walletAddr,
@@ -38,7 +51,8 @@ export default async function handler(req, res) {
             socialHandle,
             frontendKeyAddress: getAddress(frontendKeyAddress),
             backendKeyAddress: backendWallet.address,
-            backendKeyPassword
+            backendKeyPassword,
+            timelock: quickAccTimelock
         })
     }
 
