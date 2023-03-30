@@ -18,9 +18,9 @@ const AccountProvider = ({ children }) => {
     setAccount({})
   }, [])
 
-  const isAccountEmpty = useMemo(() => Object.keys(account).length, [account])
+  const isAccountEmpty = useMemo(() => !Object.keys(account).length, [account])
 
-  const isOwnerOfTheAccount = useMemo(() => account.token, [account.token])
+  const isOwnerOfTheAccount = useMemo(() => !!account.token, [account.token])
 
   return (
     <AccountContext.Provider

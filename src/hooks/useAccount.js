@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { AccountContext } from '@/contexts/accountContext'
 
-export default function useNetwork() {
+export default function useAccount() {
   const context = useContext(AccountContext)
 
   if (!context) {

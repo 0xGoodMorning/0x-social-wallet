@@ -3,10 +3,13 @@ import { useState } from 'react'
 import { Wallet } from 'ethers'
 
 import { fetchPost } from '@/helpers/fetch'
+import useAccount from '@/hooks/useAccount'
 
 export default function useCreateWallet() {
   const [err, setErr] = useState('')
   const [inProgress, setInProgress] = useState(false)
+
+  const { updateAccount } = useAccount()
 
   const wrapProgress = async (fn, type = true) => {
     setInProgress(type)
@@ -51,11 +54,16 @@ export default function useCreateWallet() {
     )
 
     console.log('claimWalletRes', claimWalletRes)
+
+    // TODO: Update the account with a valid access token
+    updateAccount({
+      token: 'accessToken'
+    })
   }
 
   const handleClaimWallet = async ({ socialHandle, socialHandleType }) => {
     return await wrapProgress(() => claimWallet({ socialHandle, socialHandleType }), true)
   }
 
-  return { handleClaimWallet, wrapErr, wrapProgress, err, addAccErr, inProgress }
+  return { handleClaimWallet, wrapErr, wrapProgress, err, inProgress }
 }
