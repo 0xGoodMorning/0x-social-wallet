@@ -50,8 +50,6 @@ export default function Home() {
         isClosable: false,
       });
 
-    await delayPromise(2500);
-
     router.push("/wallet");
 
     // TODO: nav to the next screen
