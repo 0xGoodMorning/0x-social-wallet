@@ -24,22 +24,7 @@ export default function Home() {
   const toast = useToast();
   const { handleResolveWallet } = useResolveWallet()
 
-<<<<<<< HEAD
   const handleSubmit = async (e) => {
-=======
-  const [receiverAdr, setReceiverAddr] = useState('')
-
-  useEffect(() => {
-    async function getData() {
-      const res = await (await fetch('/api/create-receiver')).json()
-      setReceiverAddr(res.receiver_address)
-    }
-
-    getData()
-  }, [])
-
-  const handleSubmit = (e) => {
->>>>>>> development
     e.preventDefault();
     // TODO: Check if the Twitter handle is valid and make the API call
     // If not found, show an error toast
