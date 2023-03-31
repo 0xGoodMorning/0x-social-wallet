@@ -25,7 +25,7 @@ const AccountProvider = ({ children }) => {
       name: session.data.user.name,
       image: session.data.user.image,
     })
-  }, [session])
+  }, [session, updateAccount])
 
   const resetAccount = useCallback(() => {
     setAccount({})

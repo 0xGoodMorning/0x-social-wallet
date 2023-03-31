@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import { getToken } from "next-auth/jwt"
 
 export default async (req, res) => {
