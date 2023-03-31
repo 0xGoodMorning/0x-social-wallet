@@ -6,7 +6,7 @@ import { id } from "ethers/lib/utils";
 import { fetchPost } from "@/helpers/fetch";
 import useAccount from "@/hooks/useAccount";
 
-export default function useCreateWallet() {
+export default function useResolveWallet() {
   const [err, setErr] = useState("");
   const [inProgress, setInProgress] = useState(false);
 
