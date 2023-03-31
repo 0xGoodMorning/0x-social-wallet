@@ -1,3 +1,16 @@
+# 0xSocialWallet: self-custodial social accounts
+
+Proof of concept that allows people to:
+
+- Sign up with their Twitter account
+- Send funds to Twitter handles who don’t have Web3 accounts yet, essentially “inviting” them to create an account: we call this counterfactual social wallets
+
+We believe that this will be the first fully open-source and self-custodial social wallet project, with no proprietary dependencies.
+
+Read more [here](https://hackmd.io/wVZAe9BcTMG8N19w9L229A).
+
+## Tech Stack
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
