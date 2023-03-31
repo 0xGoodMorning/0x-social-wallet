@@ -52,16 +52,16 @@ export default function WalletInner({ handle, session, wallet, canClaim, onSend 
           bg="#1DA1F2"
           _hover={{ bg: "blue.300", color: "white" }}
           onClick={signIn}
-          isDisabled={session.status === 'authenticated' && !canClaim}
+          isDisabled={session?.status === 'authenticated' && !canClaim}
       >
         Claim with Twitter
       </Button>
     </HStack>
     <>
-      {session.status === 'authenticated' && !canClaim && <Alert status='warning'>
+      {session?.status === 'authenticated' && !canClaim && <Alert status='warning'>
         <AlertIcon />
         <Text>
-          Seems you&apos;re authenticated as @{session.data.handle}, but trying to claim as @{handle}.
+          Seems you&apos;re authenticated as @{session?.data?.handle}, but trying to claim as @{handle}.
           <br /><br /><Link onClick={signOut}><Text as='b'>Sign out</Text></Link> and authenticate with @{handle}
         </Text>
       </Alert>

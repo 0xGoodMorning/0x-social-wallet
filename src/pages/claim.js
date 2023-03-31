@@ -56,8 +56,8 @@ export default function Claim() {
           </> }
 
           { status === "authenticated" && <>
-            <p>Signed in as {data.user.name}</p>
-            <img src={data.user.image} />
+            <p>Signed in as {data?.user?.name}</p>
+            <Image src={data?.user?.image} alt={data?.user?.name}/>
             <button onClick={() => signOut()}>Sign out</button>
           </> }
 
