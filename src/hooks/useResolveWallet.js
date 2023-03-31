@@ -51,7 +51,7 @@ export default function useResolveWallet() {
 
     const frontendKeyAddress = frontendKeyWallet.address;
 
-    const resolveWalletRes = await fetchPost(`api/resolve-wallet`, {
+    const resolveWalletRes = await fetchPost(`/api/resolve-wallet`, {
       frontendKeyAddress,
       socialHandle,
       socialHandleType,
@@ -63,14 +63,6 @@ export default function useResolveWallet() {
           resolveWalletRes.message || resolveWalletRes
         }`
       );
-
-    updateAccount({
-      name: "Simeon",
-      handle: "sonytooo",
-      address: "0xfA2DfB09851EeC1841FEB9f7c5D2E952151bfF0a",
-      balance: 0,
-      token: null,
-    });
 
     console.log("resolveWalletRes: ", resolveWalletRes);
 
