@@ -26,5 +26,8 @@
     "react": "18.2.0",
     "react-blockies-image": "^0.0.2",
     "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "18.0.31"
   }
 }

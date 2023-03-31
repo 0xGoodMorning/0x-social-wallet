@@ -13,7 +13,7 @@ import {
   useToast,
   Link,
 } from "@chakra-ui/react";
-import { useSession, signIn, signOut,  } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 import logo from "../assets/logo.svg";
 
 export default function Claim() {

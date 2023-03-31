@@ -26,33 +26,9 @@ export default function Home() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: Check if the Twitter handle is valid and make the API call
-    // If not found, show an error toast
-    // toast({
-    //   title: "Error",
-    //   description: "Twitter handle not found.",
-    //   status: "error",
-    //   duration: 5000,
-    //   isClosable: true,
-    // });
 
-    const res = await handleResolveWallet({
-      socialHandle: e.target.value,
-      socialHandleType: "twitter",
-    });
-
-    !!res &&
-      toast({
-        title: "Success",
-        description: `Resolved to wallet: ${res.address}`,
-        status: "success",
-        duration: 2500,
-        isClosable: false,
-      });
-
-    router.push("/wallet");
-
-    // TODO: nav to the next screen
+    const socialHandle = e.target.socialHandle.value
+    router.push(`/wallet/${socialHandle}`);
   };
 
   return (
@@ -73,7 +49,7 @@ export default function Home() {
               <Image src={twitter} width="40" height="40" alt="Twitter logo" />
             </InputLeftAddon>
             <Input
-              id="twitterHandle"
+              name="socialHandle"
               type="text"
               size="lg"
               borderWidth="1px"

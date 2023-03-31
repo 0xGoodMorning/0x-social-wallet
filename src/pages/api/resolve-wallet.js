@@ -13,7 +13,8 @@ export default async function handler(req, res) {
     // return it if it exists or calc generate a new wallet and assign it to that handle
     // then store it in the DB
     let walletAddr
-    const wallets = await walletsCol.find({ socialHandle: socialHandle}).toArray()
+    const wallets = await walletsCol.find({ socialHandle, socialHandleType}).toArray()
+
     if (wallets.length > 0) {
         walletAddr = wallets[0]._id
     } else {
