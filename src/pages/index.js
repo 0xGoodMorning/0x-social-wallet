@@ -3,7 +3,6 @@ import NextLink from "next/link";
 import Image from "next/image";
 import {
   HStack,
-  Button,
   Link,
   Text,
   FormControl,
@@ -18,6 +17,7 @@ import useResolveWallet from "../hooks/useResolveWallet";
 import delayPromise from "../lib/delayPromise";
 import { useRouter } from "next/router";
 import logo from "../assets/logo.svg";
+import Button from "@/components/Button";
 
 export default function Home() {
   const toast = useToast();
@@ -101,14 +101,7 @@ export default function Home() {
               disabled={inProgress}
             />
           </InputGroup>
-          <Button
-            type="submit"
-            mt={4}
-            colorScheme="blue"
-            bg="#1DA1F2"
-            _hover={{ bg: "blue.300", color: "white" }}
-            disabled={inProgress}
-          >
+          <Button type="submit" disabled={inProgress}>
             {inProgress ? "Looking up..." : "Look up wallet"}
           </Button>
         </FormControl>

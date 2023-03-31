@@ -61,7 +61,7 @@ const hoverStyles = `
   }
 `;
 
-const HoverButton = ({ children, disabled, ...rest }) => {
+const Button = ({ children, disabled, ...rest }) => {
   const [isHovered, setIsHovered] = useState(false);
   const theme = useTheme();
 
@@ -124,4 +124,4 @@ const HoverButton = ({ children, disabled, ...rest }) => {
   );
 };
 
-export default HoverButton;
+export default Button;
