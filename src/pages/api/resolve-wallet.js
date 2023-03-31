@@ -42,6 +42,6 @@ export default async function handler(req, res) {
     }
 
     res.status(200).json({
-        address: '0x0000000000000000000000000000000000000789'
+        address: walletAddr
     })
 }
