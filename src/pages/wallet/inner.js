@@ -54,7 +54,7 @@ export default function WalletInner({
           <AlertIcon />
           <VStack align="start">
             <Text textAlign="left">
-              You're authenticated as{" "}
+              You&apos;re authenticated as{" "}
               <Text as="span" fontWeight="bold">
                 @{session?.data?.handle}
               </Text>

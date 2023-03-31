@@ -73,7 +73,7 @@ export default function WalletWrapper() {
     };
 
     fetchWallet();
-  }, [handle]);
+  }, [handle, handleResolveWallet, toast]);
 
   return (
     <>
