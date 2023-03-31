@@ -37,7 +37,9 @@ const Layout = ({ children }) => {
                   <Image src={logo} width="50" height="50" alt="Logo" />
                 </Link>
                 <Link href="/">
-                  <Text fontSize="2xl">0xSocialWallet</Text>
+                  <Text fontSize={{ base: "xl", md: "2xl" }}>
+                    0xSocialWallet
+                  </Text>
                 </Link>
               </HStack>
               <HStack>
@@ -47,7 +49,7 @@ const Layout = ({ children }) => {
                       fontWeight="bold"
                       color="#1DA1F4"
                       marginInlineStart="0"
-                      size="md"
+                      fontSize={{ base: "sm", md: "md" }}
                     >
                       @{session.data.handle}
                     </Text>
@@ -56,6 +58,7 @@ const Layout = ({ children }) => {
                     variant="link"
                     marginTop="0 !important"
                     onClick={signOut}
+                    fontSize={{ base: "sm", md: "md" }}
                   >
                     Logout
                   </Button>
