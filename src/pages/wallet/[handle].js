@@ -17,7 +17,7 @@ export default function WalletWrapper() {
   const router = useRouter()
   const session = useSession()
   const toast = useToast()
-  const { handleResolveWallet, inProgress } = useResolveWallet()
+  const { handleResolveWallet } = useResolveWallet()
 
   const [wallet, setWallet] = useState()
   const { handle } = router.query
@@ -65,7 +65,6 @@ export default function WalletWrapper() {
     fetchWallet()
   }, [handle])
 
-
   return (
     <VStack spacing={4} align="center">
       <HStack spacing={4} alignItems="center" mb="2">
@@ -87,13 +86,13 @@ export default function WalletWrapper() {
 
       <VStack
       >
-        { inProgress && <HStack>
+        { !wallet?.address && !wallet?.hasError && <HStack>
           <Text>Resolving wallet address. Please wait!</Text>
           <Spinner/>
         </HStack>
         }
 
-        { wallet?.address && <WalletInner handle={handle} session={session} wallet={wallet} canClaim /> }
+        { wallet?.address && <WalletInner handle={handle} session={session} wallet={wallet} canClaim={canClaim} /> }
       </VStack>
 
     </VStack>

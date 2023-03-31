@@ -1,29 +1,20 @@
 import React from "react";
-import NextLink from "next/link";
 import Image from "next/image";
 import {
-  HStack,
   Button,
-  Link,
   Text,
   FormControl,
   InputGroup,
   InputLeftAddon,
   Input,
   useToast,
-  VStack,
 } from "@chakra-ui/react";
 import twitter from "../assets/twitter-logo.svg";
-import useResolveWallet from "../hooks/useResolveWallet";
-import delayPromise from "../lib/delayPromise";
 import { useRouter } from "next/router";
 import logo from "../assets/logo.svg";
 
 export default function Home() {
-  const toast = useToast();
   const router = useRouter();
-  const { handleResolveWallet, inProgress } = useResolveWallet();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -57,7 +48,6 @@ export default function Home() {
               bg="#F0F0F0"
               borderRadius="10"
               focusBorderColor="blue.500"
-              disabled={inProgress}
             />
           </InputGroup>
           <Button
@@ -66,9 +56,8 @@ export default function Home() {
             colorScheme="blue"
             bg="#1DA1F2"
             _hover={{ bg: "blue.300", color: "white" }}
-            disabled={inProgress}
           >
-            {inProgress ? "Looking up..." : "Look up wallet"}
+            Look up wallet
           </Button>
         </FormControl>
       </form>

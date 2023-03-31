@@ -7,9 +7,11 @@ import {
   Link,
   Text,
   VStack,
+  Alert,
+  AlertIcon
 } from "@chakra-ui/react";
 
-export default function WalletInner({ handle, session, wallet }) {
+export default function WalletInner({ handle, session, wallet, canClaim }) {
   return <>
     <VStack
         w="full"
@@ -54,10 +56,15 @@ export default function WalletInner({ handle, session, wallet }) {
         Claim with Twitter
       </Button>
     </HStack>
-    {session.status === 'authenticated' && !canClaim && <Alert>
-      <Text>Seems you're authenticated as @{session.data.handle}, but trying to claim as @{handle}</Text>
-      <Text><Link onClick={signOut}><Text as='b'>Sign out</Text></Link> and authenticate with @{handle}</Text>
-    </Alert>
-    }
+    <>
+      {session.status === 'authenticated' && !canClaim && <Alert status='warning'>
+        <AlertIcon />
+        <Text>
+          Seems you're authenticated as @{session.data.handle}, but trying to claim as @{handle}.
+          <br /><br /><Link onClick={signOut}><Text as='b'>Sign out</Text></Link> and authenticate with @{handle}
+        </Text>
+      </Alert>
+      }
+    </>
   </>
 }
