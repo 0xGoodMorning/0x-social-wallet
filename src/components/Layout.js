@@ -96,7 +96,12 @@ const Layout = ({ children }) => {
           )}
         </Box>
 
-        <VStack as="main" spacing={6} maxWidth="400px" textAlign="center">
+        <VStack
+          as="main"
+          spacing={6}
+          maxWidth={{ base: "90%", md: "400px" }}
+          textAlign="center"
+        >
           {children}
         </VStack>
 
