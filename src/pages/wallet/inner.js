@@ -19,7 +19,6 @@ export default function WalletInner({
         borderRadius="md"
         borderColor="gray.200"
         p={6}
-        spacing={4}
         alignItems="flex-start"
       >
         <HStack spacing={4} alignItems="center">
@@ -28,7 +27,13 @@ export default function WalletInner({
             <Text fontSize="xl" fontWeight="bold">
               Crypto Address
             </Text>
-            <Text fontSize="md">{wallet?.address}</Text>
+            <Text
+              fontSize="md"
+              textAlign="left"
+              style={{ wordBreak: "break-word" }}
+            >
+              {wallet?.address}
+            </Text>
           </VStack>
         </HStack>
         <Text fontSize="xl" fontWeight="bold">
@@ -57,7 +62,7 @@ export default function WalletInner({
               <Text as="span" fontWeight="bold">
                 @{handle}
               </Text>
-              <Text as="span">{`'s funds.`}</Text>
+              {`'s funds.`}
             </Text>
             <Text textAlign="left">
               To be able to claim, please{" "}
