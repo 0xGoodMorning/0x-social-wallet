@@ -36,12 +36,22 @@ export default function Home() {
     //   isClosable: true,
     // });
 
-    const res = await handleResolveWallet({
-      socialHandle: e.target.value,
-      socialHandleType: "twitter",
-    });
+    try {
+      const res = await handleResolveWallet({
+        socialHandle: e.target.value,
+        socialHandleType: "twitter",
+      });
 
-    !!res &&
+      if (!res) {
+        return toast({
+          title: "Failed to resolve wallet.",
+          description: `Bad Twitter handle?`,
+          status: "error",
+          duration: 2500,
+          isClosable: false,
+        });
+      }
+
       toast({
         title: "Success",
         description: `Resolved to wallet: ${res.address}`,
@@ -50,9 +60,16 @@ export default function Home() {
         isClosable: false,
       });
 
-    router.push("/wallet");
-
-    // TODO: nav to the next screen
+      router.push("/wallet");
+    } catch (e) {
+      toast({
+        title: "Failed to resolve wallet.",
+        description: `Either our server, or your connection is problematic. Try again later.`,
+        status: "error",
+        duration: 2500,
+        isClosable: false,
+      });
+    }
   };
 
   return (
