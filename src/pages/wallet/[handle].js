@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { useSession} from "next-auth/react";
-import { useRouter } from 'next/router'
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 import {
+  Box,
   HStack,
   Link,
   Text,
@@ -14,29 +15,29 @@ import {
   ModalOverlay,
   ModalContent,
   ModalCloseButton,
-  Spinner
+  Spinner,
 } from "@chakra-ui/react";
 import useResolveWallet from "@/hooks/useResolveWallet";
-import { CopyIcon } from '@chakra-ui/icons'
+import { CopyIcon } from "@chakra-ui/icons";
 import QRCode from "react-qr-code";
 import WalletInner from "@/pages/wallet/inner";
 
 export default function WalletWrapper() {
-  const router = useRouter()
-  const session = useSession()
-  const toast = useToast()
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const { handleResolveWallet } = useResolveWallet()
+  const router = useRouter();
+  const session = useSession();
+  const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { handleResolveWallet } = useResolveWallet();
 
-  const [wallet, setWallet] = useState()
-  const { handle } = router.query
+  const [wallet, setWallet] = useState();
+  const { handle } = router.query;
 
-  const canClaim = session.status === "authenticated" && session.data.handle === handle
+  const canClaim =
+    session.status === "authenticated" && session.data.handle === handle;
 
-  useEffect( () => {
-
+  useEffect(() => {
     const fetchWallet = async () => {
-      if (!handle) return
+      if (!handle) return;
 
       const response = await handleResolveWallet({
         socialHandle: handle,
@@ -54,8 +55,8 @@ export default function WalletWrapper() {
 
         setWallet({
           address: response.address,
-          balance: 0
-        })
+          balance: 0,
+        });
       } else {
         toast({
           title: "Error",
@@ -66,61 +67,83 @@ export default function WalletWrapper() {
         });
 
         setWallet({
-          hasError: true
-        })
+          hasError: true,
+        });
       }
-    }
+    };
 
-    fetchWallet()
-  }, [handle])
+    fetchWallet();
+  }, [handle]);
 
-  return <>
-    <VStack spacing={4} align="center">
-      <HStack spacing={4} alignItems="center" mb="2">
-        <Image
-          src={canClaim ? session.data?.user.image : '/profilePic.jpg'}
-          boxSize="100px"
-          borderRadius="full"
-          alt="Twitter image"
-        />
-        <VStack align="flex-start">
-          <Text fontSize="2xl" fontWeight="bold">
-            {canClaim && session.data?.user.name}
-          </Text>
-          <Text fontSize="l">
-            Twitter handle: <Link href={`https://twitter.com/${handle}`} target="_blank">@{handle}</Link>
-          </Text>
-        </VStack>
-      </HStack>
-
-      <VStack
-      >
-        { !wallet?.address && !wallet?.hasError && <HStack>
-          <Text>Resolving wallet address. Please wait!</Text>
-          <Spinner/>
+  return (
+    <>
+      <VStack spacing={4} align="center">
+        <HStack spacing={4} alignItems="center" mb="2">
+          <Image
+            src={canClaim ? session.data?.user.image : "/user-avatar.svg"}
+            boxSize="100px"
+            borderRadius="full"
+            alt="Twitter image"
+          />
+          <VStack align="flex-start">
+            <Text fontSize="2xl" fontWeight="bold">
+              {canClaim && session.data?.user.name}
+            </Text>
+            <Text fontSize="l" textAlign="left">
+              Twitter handle: <br />
+              <Link
+                href={`https://twitter.com/${handle}`}
+                target="_blank"
+                style={{ wordBreak: "break-all" }}
+                fontWeight="bold"
+              >
+                @{handle}
+              </Link>
+            </Text>
+          </VStack>
         </HStack>
-        }
 
-        { wallet?.address && <WalletInner handle={handle} session={session} wallet={wallet} canClaim={canClaim} onSend={onOpen} /> }
+        <VStack>
+          {!wallet?.address && !wallet?.hasError && (
+            <HStack>
+              <Text>Resolving wallet address. Please wait!</Text>
+              <Spinner />
+            </HStack>
+          )}
+
+          {wallet?.address && (
+            <WalletInner
+              handle={handle}
+              session={session}
+              wallet={wallet}
+              canClaim={canClaim}
+              onSend={onOpen}
+            />
+          )}
+        </VStack>
       </VStack>
-    </VStack>
-    <Modal isOpen={isOpen} onClose={onClose} isCentered size='2xl'>
-      <ModalOverlay />
-      <ModalContent padding={16}>
-        <ModalCloseButton />
-        <Text align="center" marginBottom="10" fontSize="2xl" fontWeight="semibold">{`Send to @${handle}'s address`}</Text>
-        <VStack align="center">
-          <QRCode
+      <Modal isOpen={isOpen} onClose={onClose} isCentered size="2xl">
+        <ModalOverlay />
+        <ModalContent padding={16}>
+          <ModalCloseButton />
+          <Text
+            align="center"
+            marginBottom="10"
+            fontSize="2xl"
+            fontWeight="semibold"
+          >{`Send to @${handle}'s address`}</Text>
+          <VStack align="center">
+            <QRCode
               size={256}
               style={{ marginBottom: 10 }}
-              value={wallet?.address || ''}
+              value={wallet?.address || ""}
               viewBox={`0 0 256 256`}
-          />
-          <HStack
+            />
+            <HStack
               marginBottom={10}
-              _hover={{ cursor: 'pointer' }}
+              _hover={{ cursor: "pointer" }}
               onClick={() => {
-                navigator.clipboard.writeText(wallet?.address)
+                navigator.clipboard.writeText(wallet?.address);
                 toast({
                   title: "Success",
                   description: `Address copied to clipboard`,
@@ -129,12 +152,15 @@ export default function WalletWrapper() {
                   isClosable: false,
                 });
               }}
-          >
-            <Text fontSize="sm" noOfLines={1}>{wallet?.address}</Text>
-            <CopyIcon />
-          </HStack>
-        </VStack>
-      </ModalContent>
-    </Modal>
-  </>
+            >
+              <Text fontSize="sm" noOfLines={1}>
+                {wallet?.address}
+              </Text>
+              <CopyIcon />
+            </HStack>
+          </VStack>
+        </ModalContent>
+      </Modal>
+    </>
+  );
 }
