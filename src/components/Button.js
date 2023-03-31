@@ -34,7 +34,7 @@ const hoverBgColor = `
 `;
 
 const disabledSpanStyles = `
-  .disabled-span {
+  .disabled-span span {
     color: rgba(22, 76, 167, 0.3) !important;
   }
 `;
