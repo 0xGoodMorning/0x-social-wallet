@@ -29,7 +29,13 @@ const Layout = ({ children }) => {
         bgGradient="radial-gradient(circle at center, #E0E0E0, #C7C7C7)"
         color="#111111"
       >
-        <Box as="header" py={8} px={{ base: 4, xl: 20 }} w="full">
+        <Box
+          as="header"
+          py={8}
+          px={{ base: 4, xl: 20 }}
+          w="full"
+          maxWidth={{ base: "90%", md: "unset" }}
+        >
           {session.status === "authenticated" && (
             <HStack justify="space-between">
               <HStack spacing={4}>
@@ -37,7 +43,10 @@ const Layout = ({ children }) => {
                   <Image src={logo} width="50" height="50" alt="Logo" />
                 </Link>
                 <Link href="/">
-                  <Text fontSize={{ base: "xl", md: "2xl" }}>
+                  <Text
+                    fontSize={{ base: "xl", md: "2xl" }}
+                    display={{ base: "none", md: "inline" }}
+                  >
                     0xSocialWallet
                   </Text>
                 </Link>
