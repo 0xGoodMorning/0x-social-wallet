@@ -1,9 +1,16 @@
+import { signOut } from "next-auth/react";
 import Head from "next/head";
 import Image from "next/image";
 import React from "react";
-import { Box, Text, VStack, Link } from "@chakra-ui/react";
+import Link from "next/link";
+import { Box, Text, VStack, HStack, Button } from "@chakra-ui/react";
+import logo from "@/assets/logo.svg";
+import twitter from "../assets/twitter-logo.svg";
+import { useSession } from "next-auth/react";
 
 const Layout = ({ children }) => {
+  const session = useSession();
+
   return (
     <>
       <Head>
@@ -22,8 +29,71 @@ const Layout = ({ children }) => {
         bgGradient="radial-gradient(circle at center, #E0E0E0, #C7C7C7)"
         color="#111111"
       >
-        <Box as="header" py={4}>
-          {/* TODO: Add your header content here */}
+        <Box as="header" py={8} px={{ base: 4, xl: 20 }} w="full">
+          {session.status === "authenticated" && (
+            <HStack justify="space-between">
+              <HStack spacing={4}>
+                <Link href="/">
+                  <Image src={logo} width="50" height="50" alt="Logo" />
+                </Link>
+                <Link href="/">
+                  <Text fontSize="2xl">0xSocialWallet</Text>
+                </Link>
+              </HStack>
+              <HStack>
+                <VStack align="flex-end">
+                  <HStack>
+                    <Text
+                      fontWeight="bold"
+                      color="#1DA1F4"
+                      marginInlineStart="0"
+                      size="md"
+                    >
+                      @{session.data.handle}
+                    </Text>
+                  </HStack>
+                  <Button
+                    variant="link"
+                    marginTop="0 !important"
+                    onClick={signOut}
+                  >
+                    Logout
+                  </Button>
+                </VStack>
+                <Box position="relative">
+                  <Box
+                    borderRadius="full"
+                    overflow="hidden"
+                    width="50px"
+                    height="50px"
+                  >
+                    <Image
+                      src={session.data.user.image}
+                      alt="Twitter profile picture"
+                      width="50"
+                      height="50"
+                      boxSize="50px"
+                    />
+                  </Box>
+                  <Box
+                    position="absolute"
+                    bottom="-10px"
+                    right="-10px"
+                    bg="#1DA1F4"
+                    borderRadius="full"
+                    p="1"
+                  >
+                    <Image
+                      src={twitter}
+                      width="20"
+                      height="20"
+                      alt="Twitter logo"
+                    />
+                  </Box>
+                </Box>
+              </HStack>
+            </HStack>
+          )}
         </Box>
 
         <VStack as="main" spacing={6} maxWidth="400px" textAlign="center">
