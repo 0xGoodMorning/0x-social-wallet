@@ -18,6 +18,7 @@ export default function Home() {
     e.preventDefault();
 
     const socialHandle = e.target.socialHandle.value
+    if (socialHandle === '') return
     router.push(`/wallet/${socialHandle}`);
   };
 
