@@ -14,7 +14,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <Head>
-        <title>0x Social Wallet</title>
+        <title>0xSocialWallet</title>
         <meta
           name="description"
           content="Send/Recieve crypto assets with social accounts"
