@@ -1,24 +1,26 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import {
-  Button,
+  HStack,
+  Link,
   Text,
   FormControl,
   InputGroup,
   InputLeftAddon,
   Input,
-  useToast
+  useToast,
 } from "@chakra-ui/react";
 import twitter from "../assets/twitter-logo.svg";
 import useResolveWallet from "../hooks/useResolveWallet";
 import { useRouter } from "next/router";
 import logo from "../assets/logo.svg";
+import Button from "@/components/Button";
 
 export default function Home() {
   const toast = useToast();
   const router = useRouter();
   const { handleResolveWallet, inProgress } = useResolveWallet();
-  const [handle, setHandle] = useState('')
+  const [handle, setHandle] = useState("");
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -95,17 +97,10 @@ export default function Home() {
               borderRadius="10"
               focusBorderColor="blue.500"
               disabled={inProgress}
-              onChange={event => setHandle(event.currentTarget.value)}
+              onChange={(event) => setHandle(event.currentTarget.value)}
             />
           </InputGroup>
-          <Button
-            type="submit"
-            mt={4}
-            colorScheme="blue"
-            bg="#1DA1F2"
-            _hover={{ bg: "blue.300", color: "white" }}
-            disabled={inProgress}
-          >
+          <Button type="submit" disabled={inProgress}>
             {inProgress ? "Looking up..." : "Look up wallet"}
           </Button>
         </FormControl>
