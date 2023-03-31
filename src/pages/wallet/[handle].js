@@ -4,19 +4,28 @@ import { useRouter } from 'next/router'
 
 import {
   HStack,
-  Button,
   Link,
   Text,
   Image,
-  VStack, useToast, Spinner,
+  useToast,
+  VStack,
+  Modal,
+  useDisclosure,
+  ModalOverlay,
+  ModalContent,
+  ModalCloseButton,
+  Spinner
 } from "@chakra-ui/react";
 import useResolveWallet from "@/hooks/useResolveWallet";
+import { CopyIcon } from '@chakra-ui/icons'
+import QRCode from "react-qr-code";
 import WalletInner from "@/pages/wallet/inner";
 
 export default function WalletWrapper() {
   const router = useRouter()
   const session = useSession()
   const toast = useToast()
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const { handleResolveWallet } = useResolveWallet()
 
   const [wallet, setWallet] = useState()
@@ -65,7 +74,7 @@ export default function WalletWrapper() {
     fetchWallet()
   }, [handle])
 
-  return (
+  return <>
     <VStack spacing={4} align="center">
       <HStack spacing={4} alignItems="center" mb="2">
         <Image
@@ -92,9 +101,40 @@ export default function WalletWrapper() {
         </HStack>
         }
 
-        { wallet?.address && <WalletInner handle={handle} session={session} wallet={wallet} canClaim={canClaim} /> }
+        { wallet?.address && <WalletInner handle={handle} session={session} wallet={wallet} canClaim={canClaim} onSend={onOpen} /> }
       </VStack>
-
     </VStack>
-  );
+    <Modal isOpen={isOpen} onClose={onClose} isCentered size='2xl'>
+      <ModalOverlay />
+      <ModalContent padding={16}>
+        <ModalCloseButton />
+        <Text align="center" marginBottom="10" fontSize="2xl" fontWeight="semibold">{`Send to @${handle}'s address`}</Text>
+        <VStack align="center">
+          <QRCode
+              size={256}
+              style={{ marginBottom: 10 }}
+              value={wallet?.address || ''}
+              viewBox={`0 0 256 256`}
+          />
+          <HStack
+              marginBottom={10}
+              _hover={{ cursor: 'pointer' }}
+              onClick={() => {
+                navigator.clipboard.writeText(wallet?.address)
+                toast({
+                  title: "Success",
+                  description: `Address copied to clipboard`,
+                  status: "success",
+                  duration: 1200,
+                  isClosable: false,
+                });
+              }}
+          >
+            <Text fontSize="sm" noOfLines={1}>{wallet?.address}</Text>
+            <CopyIcon />
+          </HStack>
+        </VStack>
+      </ModalContent>
+    </Modal>
+  </>
 }

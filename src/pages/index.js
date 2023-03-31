@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import {
   Text,
@@ -6,7 +6,6 @@ import {
   InputGroup,
   InputLeftAddon,
   Input,
-  useToast,
 } from "@chakra-ui/react";
 import twitter from "../assets/twitter-logo.svg";
 import { useRouter } from "next/router";
@@ -50,8 +49,8 @@ export default function Home() {
               focusBorderColor="blue.500"
             />
           </InputGroup>
-          <Button type="submit" disabled={inProgress}>
-            {inProgress ? "Looking up..." : "Look up wallet"}
+          <Button type="submit">
+            Look up wallet
           </Button>
         </FormControl>
       </form>

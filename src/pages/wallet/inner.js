@@ -11,7 +11,7 @@ import {
   AlertIcon
 } from "@chakra-ui/react";
 
-export default function WalletInner({ handle, session, wallet, canClaim }) {
+export default function WalletInner({ handle, session, wallet, canClaim, onSend }) {
   return <>
     <VStack
         w="full"
@@ -42,6 +42,7 @@ export default function WalletInner({ handle, session, wallet, canClaim }) {
           colorScheme="blue"
           bg="#1DA1F2"
           _hover={{ bg: "blue.300", color: "white" }}
+          onClick={onSend}
       >
         Send
       </Button>
