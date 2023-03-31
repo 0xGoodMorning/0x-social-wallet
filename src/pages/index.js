@@ -1,21 +1,16 @@
-import React from "react";
-import NextLink from "next/link";
+import React, { useState } from "react";
 import Image from "next/image";
 import {
-  HStack,
   Button,
-  Link,
   Text,
   FormControl,
   InputGroup,
   InputLeftAddon,
   Input,
-  useToast,
-  VStack,
+  useToast
 } from "@chakra-ui/react";
 import twitter from "../assets/twitter-logo.svg";
 import useResolveWallet from "../hooks/useResolveWallet";
-import delayPromise from "../lib/delayPromise";
 import { useRouter } from "next/router";
 import logo from "../assets/logo.svg";
 
@@ -23,8 +18,9 @@ export default function Home() {
   const toast = useToast();
   const router = useRouter();
   const { handleResolveWallet, inProgress } = useResolveWallet();
+  const [handle, setHandle] = useState('')
 
-  const handleSubmit = async (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     // TODO: Check if the Twitter handle is valid and make the API call
     // If not found, show an error toast
@@ -38,7 +34,7 @@ export default function Home() {
 
     try {
       const res = await handleResolveWallet({
-        socialHandle: e.target.value,
+        socialHandle: handle,
         socialHandleType: "twitter",
       });
 
@@ -83,8 +79,8 @@ export default function Home() {
         Twitter handle.
       </Text>
 
-      <form onSubmit={handleSubmit}>
-        <FormControl>
+      <form onSubmit={onSubmit}>
+        <FormControl isRequired>
           <InputGroup size="lg">
             <InputLeftAddon size="lg" p={1} borderLeftRadius="20">
               <Image src={twitter} width="40" height="40" alt="Twitter logo" />
@@ -99,6 +95,7 @@ export default function Home() {
               borderRadius="10"
               focusBorderColor="blue.500"
               disabled={inProgress}
+              onChange={event => setHandle(event.currentTarget.value)}
             />
           </InputGroup>
           <Button
