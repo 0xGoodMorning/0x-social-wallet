@@ -1,11 +1,12 @@
 {
-    "git": {
-        "deploymentEnabled": {
-            "main": false,
-            "ui-skeleton": false,
-            "db-setup": false,
-            "feature/call-resolve-wallet": false,
-            "layout-component": false
-        }
+  "git": {
+    "deploymentEnabled": {
+      "main": false,
+      "ui-skeleton": false,
+      "db-setup": false,
+      "feature/call-resolve-wallet": false,
+      "layout-component": false,
+      "feature/better-ui": false
     }
+  }
 }
