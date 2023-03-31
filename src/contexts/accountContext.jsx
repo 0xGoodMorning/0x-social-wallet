@@ -1,4 +1,6 @@
-import React, { createContext, useCallback, useMemo, useState } from 'react'
+import React, {createContext, useCallback, useEffect, useMemo, useState} from 'react'
+import { useSession } from "next-auth/react"
+
 
 const AccountContext = createContext({
   account: {},
@@ -7,12 +9,23 @@ const AccountContext = createContext({
 const AccountProvider = ({ children }) => {
   const [account, setAccount] = useState({})
 
+  const session = useSession();
+
   const updateAccount = useCallback((accProps) => {
     setAccount((acc) => ({
       ...acc,
       ...accProps
     }))
   }, [])
+
+  useEffect(() => {
+    if (session.status !== "authenticated") return
+
+    updateAccount({
+      name: session.data.user.name,
+      image: session.data.user.image,
+    })
+  }, [session, updateAccount])
 
   const resetAccount = useCallback(() => {
     setAccount({})
