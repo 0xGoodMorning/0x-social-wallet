@@ -73,7 +73,9 @@ export default function WalletWrapper() {
     };
 
     fetchWallet();
-  }, [handle, handleResolveWallet, toast]);
+  // TODO: check re-render toasts issue if toast and handleResolveWallet are used as deps for the effect
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [handle]);
 
   return (
     <>
