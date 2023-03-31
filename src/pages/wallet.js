@@ -6,25 +6,23 @@ import {
   Link,
   Text,
   Image,
-  FormControl,
-  InputGroup,
-  InputLeftAddon,
-  Input,
   useToast,
   VStack,
   Modal,
   useDisclosure,
   ModalOverlay,
   ModalContent,
-  Icon
+  ModalCloseButton
 } from "@chakra-ui/react";
 import { CopyIcon } from '@chakra-ui/icons'
 import QRCode from "react-qr-code";
 
 export default function Wallet() {
-  const { account } = useAccount()
+  const { account, isAccountEmpty } = useAccount()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const toast = useToast();
+
+  console.log(account, isAccountEmpty)
 
   return (
     <>
@@ -75,6 +73,7 @@ export default function Wallet() {
             bg="#1DA1F2"
             _hover={{ bg: "blue.300", color: "white" }}
             onClick={onOpen}
+            isDisabled={isAccountEmpty}
           >
             Send
           </Button>
@@ -83,34 +82,41 @@ export default function Wallet() {
             colorScheme="blue"
             bg="#1DA1F2"
             _hover={{ bg: "blue.300", color: "white" }}
+            isDisabled={isAccountEmpty}
           >
             Claim with Twitter
           </Button>
         </HStack>
       </VStack>
+
       <Modal isOpen={isOpen} onClose={onClose} isCentered size='2xl'>
         <ModalOverlay />
           <ModalContent padding={16}>
+            <ModalCloseButton />
             <Text align="center" marginBottom="10" fontSize="2xl" fontWeight="semibold">{`Send to ${account.name}'s address`}</Text>
             <VStack align="center">
-            <QRCode
-              size={256}
-              style={{ marginBottom: 10 }}
-              value={account.address || ''}
-              viewBox={`0 0 256 256`}
+              <QRCode
+                size={256}
+                style={{ marginBottom: 10 }}
+                value={account.address || ''}
+                viewBox={`0 0 256 256`}
               />
-              <HStack marginBottom={10}>
+              <HStack
+                marginBottom={10}         
+                _hover={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    navigator.clipboard.writeText(account.address)
+                    toast({
+                      title: "Success",
+                      description: `Address copied to clipboard`,
+                      status: "success",
+                      duration: 1200,
+                      isClosable: false,
+                    });
+                  }}
+                >
                 <Text fontSize="sm" noOfLines={1}>{account.address}</Text>
-                <CopyIcon onClick={() => {
-                  navigator.clipboard.writeText(account.address)
-                  toast({
-                    title: "Success",
-                    description: `Address copied to clipboard`,
-                    status: "success",
-                    duration: 750,
-                    isClosable: false,
-                  });
-                  }} />
+                <CopyIcon />
               </HStack>
             </VStack>
           </ModalContent>
