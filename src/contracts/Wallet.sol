@@ -15,6 +15,7 @@ contract Wallet {
 	event LogPrivilegeChanged(address indexed addr, bytes32 priv);
 	event LogErr(address indexed to, uint value, bytes data, bytes returnData); // only used in tryCatch
 	event LogScheduled(bytes32 indexed txnHash, bytes32 indexed recoveryHash, address indexed recoveryKey, uint nonce, uint time, Transaction[] txns);
+	event LogScheduled2(bytes32 indexed txnHash, bytes32 indexed recoveryHash, address indexed recoveryKey, uint time);
 	event LogCancelled(bytes32 indexed txnHash, bytes32 indexed recoveryHash, address indexed recoveryKey, uint time);
 	event LogExecScheduled(bytes32 indexed txnHash, bytes32 indexed recoveryHash, uint time);
 
@@ -127,7 +128,8 @@ contract Wallet {
 					emit LogCancelled(hash, recoveryInfoHash, recoveryKey, block.timestamp);
 				} else {
 					scheduledRecoveries[hash] = block.timestamp + recoveryInfo.timelock;
-					emit LogScheduled(hash, recoveryInfoHash, recoveryKey, currentNonce, block.timestamp, txns);
+					// emit LogScheduled(hash, recoveryInfoHash, recoveryKey, currentNonce, block.timestamp, txns);
+					emit LogScheduled2(hash, recoveryInfoHash, recoveryKey, block.timestamp);
 				}
 				return;
 			}
