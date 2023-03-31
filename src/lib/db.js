@@ -7,7 +7,7 @@ let db = null
 
 function connect() {
     try {
-        const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 })
+        const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1, maxPoolSize: 2 })
         db = client.db(dbName)
         createIndexes(db)
 

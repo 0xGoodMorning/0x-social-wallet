@@ -5,7 +5,14 @@
             "ui-skeleton": false,
             "db-setup": false,
             "feature/call-resolve-wallet": false,
-            "layout-component": false
+            "layout-component": false,
+            "feature/better-ui": false,
+            "feature/add-contracts-and-calc-predeploy-wallet-address": false,
+            "feature/send-modal": false,
+            "config/error-handling": false,
+            "feature/account-provider": false,
+            "config/ui-skeleton": false
         }
     }
+  }
 }
