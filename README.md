@@ -1,3 +1,5 @@
+https://user-images.githubusercontent.com/3863376/229554497-8a182d17-eed6-49f0-9950-621cc286e556.mp4
+
 # 0xSocialWallet: self-custodial social accounts
 
 Proof of concept that allows people to:
