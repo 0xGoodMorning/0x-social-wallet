@@ -1,6 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 import { getToken } from "next-auth/jwt"
 import { getDb } from '../../lib/db'
+import { getProvider } from '../../lib/provider'
 import * as ethers from 'ethers'
 
 const { Interface } = ethers.utils
@@ -12,8 +13,10 @@ const baseIdentityAddr = process.env.BASE_WALLET_ADDRESS
 const quickAccManager = process.env.MANAGER_ADDRESS
 const batcherAddr = process.env.BATCHER_ADDRESS
 const quickAccTimelock = process.env.MANAGER_TIMELOCK
+const rpcUrl = process.env.RPC_URL
 
 const walletsCol = getDb().collection('wallets')
+const provider = getProvider(rpcUrl, 'Sepolia', 11155111)
 
 export default async (req, res) => {
     const { frontendKeyAddress, socialHandle, socialHandleType, socialToken } = req.body
@@ -44,7 +47,24 @@ export default async (req, res) => {
         data: BatcherInterface.encodeFunctionData('batchCall', [batch])
     }
 
-    // TODO: rpc provider
+    // TODO: send txn
+    const backendWallet = new ethers.Wallet(process.env.BACKEND_PRIVATE_KEY, provider)
+    const txn = await backendWallet.sendTransaction(batcherTxn)
+        .then(async res => {
+            // res.hash
+        })
+        .catch(error => {
+            //
+        })
+
+    // // handle txn mine
+    // await txn.wait()
+    //     .then(async res => {
+    //         // res.transactionHash
+    //     })
+    //     .catch(error => {
+    //         //
+    //     })
 
     res.status(200).json({
         success: true,
