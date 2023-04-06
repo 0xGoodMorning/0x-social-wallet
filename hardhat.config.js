@@ -43,7 +43,7 @@ module.exports = {
     },
     sepolia: {
         chainId: 11155111,
-        url: "https://eth-sepolia.g.alchemy.com/v2/" + config.parsed.ALCHEMY_API_KEY,
+        url: config.parsed.RPC_URL,
         accounts: [config.parsed.HARDHAT_PRIVATE_KEY],
     },
   },
