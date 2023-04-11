@@ -3,10 +3,12 @@ import { getToken } from "next-auth/jwt"
 import { getDb } from '../../lib/db'
 import { getProvider } from '../../lib/provider'
 import * as ethers from 'ethers'
+import { AbiCoder, keccak256 } from 'ethers/lib/utils'
 
 const { Interface } = ethers.utils
 const FactoryInterface = new Interface(require('../../contracts/artifacts/src/contracts/WalletFactory.sol/WalletFactory.json').abi)
 const BatcherInterface = new Interface(require('../../contracts/artifacts/src/contracts/Batcher.sol/Batcher.json').abi)
+const WalletInterface = new Interface(require('../../contracts/artifacts/src/contracts/Wallet.sol/Wallet.json').abi)
 
 const identityFactoryAddr = process.env.WALLET_FACTORY_ADDRESS
 const baseIdentityAddr = process.env.BASE_WALLET_ADDRESS
@@ -39,13 +41,18 @@ export default async (req, res) => {
     const deployTxn = [identityFactoryAddr, 0, FactoryInterface.encodeFunctionData('deploy', [wallet.bytecode, wallet.salt])]
 
     // TODO: change key txn
+    const abiCoder = new AbiCoder()
+    const quickAccountTuple = [quickAccTimelock, frontendKeyAddress, wallet.backendKeyAddress]
+    const accHash = keccak256(abiCoder.encode(['tuple(uint, address, address)'], [quickAccountTuple]))
     const keyChangeTxn = [
-        //
+        wallet._id,
+        0,
+        WalletInterface.encodeFunctionData('setAddrPrivilege', [quickAccManager, accHash])
     ]
 
     const batch = [
         deployTxn,
-        // keyChangeTxn
+        keyChangeTxn
     ]
 	const batcherTxn = {
         to: batcherAddr,
