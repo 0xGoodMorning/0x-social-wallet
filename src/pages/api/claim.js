@@ -37,34 +37,41 @@ export default async (req, res) => {
 
     // deploy contract to receiver wallet address
     const deployTxn = [identityFactoryAddr, 0, FactoryInterface.encodeFunctionData('deploy', [wallet.bytecode, wallet.salt])]
+
     // TODO: change key txn
-    const keyTxn = [
+    const keyChangeTxn = [
         //
     ]
-    const batch = [deployTxn, keyTxn]
+
+    const batch = [
+        deployTxn,
+        // keyChangeTxn
+    ]
 	const batcherTxn = {
         to: batcherAddr,
         data: BatcherInterface.encodeFunctionData('batchCall', [batch])
     }
 
-    // TODO: send txn
     const backendWallet = new ethers.Wallet(process.env.BACKEND_PRIVATE_KEY, provider)
-    const txn = await backendWallet.sendTransaction(batcherTxn)
-        .then(async res => {
-            // res.hash
+
+    // send txn
+    backendWallet.sendTransaction(batcherTxn)
+        .then(async txResponse => {
+            console.log(`[CLAIM] TX sent, hash: ${txResponse.hash}`)
+
+            // handle txn mine
+            txResponse.wait()
+                .then(async txReceipt => {
+                    console.log(`[CLAIM] TX mined, hash: ${txReceipt.transactionHash}`)
+                    // res.transactionHash
+                })
+                .catch(error => {
+                    console.log(`[CLAIM] TX mine fail, error: ${error}`)
+                })
         })
         .catch(error => {
-            //
+            console.log(`[CLAIM] TX send fail, error: ${error}`)
         })
-
-    // // handle txn mine
-    // await txn.wait()
-    //     .then(async res => {
-    //         // res.transactionHash
-    //     })
-    //     .catch(error => {
-    //         //
-    //     })
 
     res.status(200).json({
         success: true,
