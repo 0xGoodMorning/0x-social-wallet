@@ -44,15 +44,22 @@ export default async (req, res) => {
     const abiCoder = new AbiCoder()
     const quickAccountTuple = [quickAccTimelock, frontendKeyAddress, wallet.backendKeyAddress]
     const accHash = keccak256(abiCoder.encode(['tuple(uint, address, address)'], [quickAccountTuple]))
+
     const keyChangeTxn = [
         wallet._id,
         0,
         WalletInterface.encodeFunctionData('setAddrPrivilege', [quickAccManager, accHash])
     ]
+    const CLAIM_SIGTYPE = 'FD' // 253 in hex
+    const claimSig = abiCoder.encode(['address'], [quickAccManager]) + CLAIM_SIGTYPE
 
     const batch = [
         deployTxn,
-        keyChangeTxn
+        [
+            wallet._id,
+            0,
+            WalletInterface.encodeFunctionData('execute', [[keyChangeTxn], claimSig])
+        ]
     ]
 	const batcherTxn = {
         to: batcherAddr,
