@@ -44,6 +44,7 @@ export default async (req, res) => {
     const abiCoder = new AbiCoder()
     const quickAccountTuple = [quickAccTimelock, frontendKeyAddress, wallet.backendKeyAddress]
     const accHash = keccak256(abiCoder.encode(['tuple(uint, address, address)'], [quickAccountTuple]))
+// console.log(`[CLAIM] changing accHash of wallet: ${wallet._id} to: ${accHash}`)
 
     const keyChangeTxn = [
         wallet._id,
@@ -77,7 +78,11 @@ export default async (req, res) => {
             txResponse.wait()
                 .then(async txReceipt => {
                     console.log(`[CLAIM] TX mined, hash: ${txReceipt.transactionHash}`)
-                    // res.transactionHash
+
+                    walletsCol.updateOne(
+                        { _id: wallet._id },
+                        { $set: { 'frontendKeyAddress': frontendKeyAddress } }
+                    ).catch(e => console.error(`Could not update frontendKeyAddress for wallet: ${wallet._id}`, e))
                 })
                 .catch(error => {
                     console.log(`[CLAIM] TX mine fail, error: ${error}`)
