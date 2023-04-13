@@ -19,6 +19,11 @@ async function main() {
     const quickAccManager = await QuickAccManager.deploy();
     await quickAccManager.deployed();
     console.log('QuickAccManager deployed to: ' + quickAccManager.address);
+
+    const Batcher = await hre.ethers.getContractFactory("Batcher");
+    const batcher = await Batcher.deploy();
+    await batcher.deployed();
+    console.log('Batcher deployed to: ' + batcher.address);
 }
 
 main()

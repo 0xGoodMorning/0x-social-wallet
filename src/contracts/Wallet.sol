@@ -134,8 +134,15 @@ contract Wallet {
 				return;
 			}
 		} else {
-			signerKey = SignatureValidator.recoverAddrImpl(hash, signature, true);
-			require(privileges[signerKey] != bytes32(0), 'INSUFFICIENT_PRIVILEGE');
+			// special signature during initial deploy on receiver claim
+			if (currentNonce == 0 && sigMode == 253) {
+				require(signature.length == 33, "CLAIM_SIG_LEN");
+				signerKey = abi.decode(signature[:signature.length - 1], (address));
+			} else {
+				signerKey = SignatureValidator.recoverAddrImpl(hash, signature, true);
+				require(privileges[signerKey] != bytes32(0), 'INSUFFICIENT_PRIVILEGE');
+			}
+
 		}
 
 		executeBatch(txns);
